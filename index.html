@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madhav Studios — Creative Studio</title>
+<meta name="description" content="Madhav Studios is a global creative studio building brands, digital experiences and films that people remember.">
+
+<!-- ============================================================
+     FONTS — Unbounded (display/headlines) + Inter (body/UI)
+     Both free on Google Fonts.
+============================================================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Grain overlay for cinematic dark texture -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Custom cursor (desktop only, JS-controlled) -->
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<!-- ============================================================
+     NAV
+============================================================= -->
+<header class="nav" id="nav">
+  <div class="nav-inner container">
+    <a href="#top" class="nav-logo">MADHAV STUDIOS</a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#about">Studio</a>
+      <a href="#process">Process</a>
+      <a href="#contact" class="nav-cta">Start a project</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================================================
+       HERO
+  ============================================================= -->
+  <section class="hero">
+    <div class="hero-glow hero-glow--a" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow--b" aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <p class="hero-eyebrow" data-hero>A creative studio, working globally</p>
+
+      <h1 class="hero-title">
+        <span class="line" data-hero><span class="reveal">We create</span></span>
+        <span class="line" data-hero><span class="reveal">things people</span></span>
+        <span class="line" data-hero><span class="reveal"><em>remember.</em></span></span>
+      </h1>
+
+      <div class="hero-foot">
+        <p class="hero-desc" data-hero>
+          <!-- EDIT: your studio description -->
+          Madhav Studios is a small, independent creative studio building brands,
+          websites and films for founders who refuse to be forgettable. Based in
+          Jaipur, working with clients across three continents.
+        </p>
+
+        <div class="hero-actions" data-hero>
+          <a href="#work" class="btn btn--primary">
+            <span>View our work</span>
+          </a>
+          <a href="#contact" class="btn btn--ghost">
+            <span>Start a project</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <a href="#work" class="scroll-cue" aria-label="Scroll to work">
+      <span class="scroll-cue-line"></span>
+      Scroll
+    </a>
+  </section>
+
+  <!-- ============================================================
+       SELECTED WORK
+       EDIT: replace .work-media background-image / gradient with
+       real project photography (set inline style or a CSS class).
+  ============================================================= -->
+  <section class="work" id="work">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2>Selected work</h2>
+        <p>A handful of the brands, products and films we've helped bring into the world.</p>
+      </div>
+
+      <div class="work-grid">
+
+        <a href="#" class="work-card work-card--lg" data-reveal>
+          <div class="work-media work-media--1"></div>
+          <div class="work-info">
+            <h3>Solara</h3>
+            <span>Brand Identity &amp; Web Design</span>
+          </div>
+        </a>
+
+        <a href="#" class="work-card" data-reveal>
+          <div class="work-media work-media--2"></div>
+          <div class="work-info">
+            <h3>Nocturne Films</h3>
+            <span>Video &amp; Motion</span>
+          </div>
+        </a>
+
+        <a href="#" class="work-card" data-reveal>
+          <div class="work-media work-media--3"></div>
+          <div class="work-info">
+            <h3>Vantage</h3>
+            <span>Digital Experience</span>
+          </div>
+        </a>
+
+        <a href="#" class="work-card work-card--lg" data-reveal>
+          <div class="work-media work-media--4"></div>
+          <div class="work-info">
+            <h3>Eastward Collective</h3>
+            <span>Creative Direction</span>
+          </div>
+        </a>
+
+        <a href="#" class="work-card" data-reveal>
+          <div class="work-media work-media--5"></div>
+          <div class="work-info">
+            <h3>Kavir</h3>
+            <span>Branding &amp; Packaging</span>
+          </div>
+        </a>
+
+        <a href="#" class="work-card" data-reveal>
+          <div class="work-media work-media--6"></div>
+          <div class="work-info">
+            <h3>Halcyon</h3>
+            <span>Social &amp; Campaign</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SERVICES — editorial list, not cards
+  ============================================================= -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2>What we do</h2>
+        <p>Six disciplines, one team. We move between them so nothing gets lost in translation.</p>
+      </div>
+
+      <ul class="service-list">
+        <li class="service-row" data-reveal>
+          <span class="service-index">01</span>
+          <span class="service-name">Branding</span>
+          <span class="service-desc">Naming, identity systems and the strategy that holds them together.</span>
+        </li>
+        <li class="service-row" data-reveal>
+          <span class="service-index">02</span>
+          <span class="service-name">Web Design</span>
+          <span class="service-desc">Sites and products built to be fast, distinctive and genuinely usable.</span>
+        </li>
+        <li class="service-row" data-reveal>
+          <span class="service-index">03</span>
+          <span class="service-name">Creative Direction</span>
+          <span class="service-desc">A single point of view carried across every touchpoint of a brand.</span>
+        </li>
+        <li class="service-row" data-reveal>
+          <span class="service-index">04</span>
+          <span class="service-name">Video &amp; Motion</span>
+          <span class="service-desc">Films, launch content and motion design shot and cut in-house.</span>
+        </li>
+        <li class="service-row" data-reveal>
+          <span class="service-index">05</span>
+          <span class="service-name">Social Media</span>
+          <span class="service-desc">Editorial calendars and content systems built for how people actually scroll.</span>
+        </li>
+        <li class="service-row" data-reveal>
+          <span class="service-index">06</span>
+          <span class="service-name">Digital Experiences</span>
+          <span class="service-desc">Interactive work — installations, apps and campaigns — for moments that matter.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================= -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-statement" data-reveal>
+        <h2>Ten years of building things that outlast the trend cycle.</h2>
+      </div>
+
+      <div class="about-body" data-reveal>
+        <p>
+          <!-- EDIT: your studio story -->
+          Madhav Studios began as a two-person design desk in Jaipur and grew into
+          a full creative studio working with founders, filmmakers and brands
+          across three continents. We don't believe in one-size templates — every
+          identity, film and interface we ship is built from scratch, shaped by
+          the story it needs to tell.
+        </p>
+        <p>
+          We're small on purpose. Every project is led by people who actually
+          make the work, not account managers relaying it — which means faster
+          decisions, fewer meetings, and a studio that stays personally invested
+          in what it ships.
+        </p>
+
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-num">10+</span>
+            <span class="stat-label">Years in business</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">120+</span>
+            <span class="stat-label">Projects delivered</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">18</span>
+            <span class="stat-label">Countries served</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROCESS
+  ============================================================= -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2>How a project moves</h2>
+        <p>The same four stages, every time — refined over a decade of client work.</p>
+      </div>
+
+      <ol class="process-line">
+        <li class="process-step" data-reveal>
+          <span class="process-num">01</span>
+          <h3>Discover</h3>
+          <p>We start by listening — to your market, your users and where the current approach is falling short.</p>
+        </li>
+        <li class="process-step" data-reveal>
+          <span class="process-num">02</span>
+          <h3>Strategy</h3>
+          <p>Research becomes a point of view: positioning, messaging and a creative direction everyone can align behind.</p>
+        </li>
+        <li class="process-step" data-reveal>
+          <span class="process-num">03</span>
+          <h3>Create</h3>
+          <p>Design, build and production happen in the open, with regular reviews so nothing arrives as a surprise.</p>
+        </li>
+        <li class="process-step" data-reveal>
+          <span class="process-num">04</span>
+          <h3>Launch</h3>
+          <p>We ship, measure what happens, and stay close after launch to refine what the data tells us.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA
+  ============================================================= -->
+  <section class="cta" id="contact">
+    <div class="cta-glow" aria-hidden="true"></div>
+    <div class="container cta-inner">
+      <h2 data-reveal>Have an idea?<br>Let's build it.</h2>
+      <p data-reveal>Tell us what you're making — we typically reply within one business day.</p>
+
+      <div data-reveal>
+        <!-- EDIT: replace with your real studio email -->
+        <a href="mailto:hello@madhavstudios.com?subject=New%20project%20enquiry" class="btn btn--primary btn--lg">
+          <span>hello@madhavstudios.com</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+============================================================= -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">MADHAV STUDIOS</span>
+      <p>A creative studio for brands, products and films that stay with people.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <!-- EDIT: point these at your real profiles -->
+      <a href="#" target="_blank" rel="noopener">Instagram</a>
+      <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Behance</a>
+      <a href="mailto:hello@madhavstudios.com">Email</a>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© <span id="year"></span> Madhav Studios. All rights reserved.</span>
+    <span>Jaipur · Worldwide</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
