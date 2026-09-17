@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Madhav Studios — Homepage Editor</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #080808;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .topbar {
+      height: 70px;
+      padding: 0 30px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 14px;
+      letter-spacing: 4px;
+      font-weight: bold;
+    }
+
+    .back {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back:hover {
+      color: #fff;
+    }
+
+    .container {
+      width: min(900px, 92%);
+      margin: 50px auto;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #777;
+      margin-bottom: 35px;
+    }
+
+    .editor {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+
+    .editor h2 {
+      font-size: 20px;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      color: #aaa;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 22px;
+      background: #080808;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 8px;
+      outline: none;
+      font-family: inherit;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #fff;
+    }
+
+    .save {
+      padding: 14px 24px;
+      background: #fff;
+      color: #000;
+      border: 0;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .save:hover {
+      opacity: .85;
+    }
+
+    .save:disabled {
+      opacity: .5;
+      cursor: wait;
+    }
+
+    #message {
+      display: inline-block;
+      margin-left: 15px;
+      color: #77dd77;
+      font-size: 14px;
+    }
+
+    .danger {
+      color: #ff7777;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="logo">
+      MADHAV STUDIOS
+    </div>
+
+    <a class="back" href="dashboard.html">
+      ← Dashboard
+    </a>
+
+  </header>
+
+  <main class="container">
+
+    <h1>Homepage Editor</h1>
+
+    <p class="subtitle">
+      Edit the content displayed on your Madhav Studios homepage.
+    </p>
+
+    <section class="editor">
+
+      <h2>Hero Section</h2>
+
+      <label for="brand">
+        Brand Name
+      </label>
+
+      <input
+        id="brand"
+        type="text"
+        placeholder="MADHAV STUDIOS"
+      >
+
+      <label for="headline">
+        Main Headline
+      </label>
+
+      <input
+        id="headline"
+        type="text"
+        placeholder="We create things people remember."
+      >
+
+      <label for="description">
+        Description
+      </label>
+
+      <textarea
+        id="description"
+        placeholder="Write your studio description..."
+      ></textarea>
+
+      <label for="primaryButton">
+        Primary Button
+      </label>
+
+      <input
+        id="primaryButton"
+        type="text"
+        placeholder="View Our Work"
+      >
+
+      <label for="secondaryButton">
+        Secondary Button
+      </label>
+
+      <input
+        id="secondaryButton"
+        type="text"
+        placeholder="Start a Project"
+      >
+
+      <button class="save" id="saveButton">
+        Save Changes
+      </button>
+
+      <span id="message"></span>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-config.js"></script>
+
+  <script>
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const saveButton = document.getElementById("saveButton");
+    const message = document.getElementById("message");
+
+    async function checkOwner() {
+
+      const {
+        data: { session }
+      } = await supabaseClient.auth.getSession();
+
+      if (!session) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from("admin_users")
+        .select("user_id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
+
+      if (error || !data) {
+        await supabaseClient.auth.signOut();
+        window.location.href = "index.html";
+        return;
+      }
+
+      loadHomepage();
+    }
+
+    async function loadHomepage() {
+
+      const { data, error } = await supabaseClient
+        .from("site_content")
+        .select("*");
+
+      if (error) {
+        message.textContent = "Could not load homepage content.";
+        message.className = "danger";
+        return;
+      }
+
+      const content = {};
+
+      data.forEach(item => {
+        content[item.section] = item;
+      });
+
+      if (content.hero) {
+        document.getElementById("brand").value =
+          content.hero.title || "";
+
+        document.getElementById("headline").value =
+          content.hero.subtitle || "";
+
+        document.getElementById("description").value =
+          content.hero.description || "";
+      }
+    }
+
+    async function saveHomepage() {
+
+      saveButton.disabled = true;
+      saveButton.textContent = "Saving...";
+      message.textContent = "";
+
+      const brand =
+        document.getElementById("brand").value.trim();
+
+      const headline =
+        document.getElementById("headline").value.trim();
+
+      const description =
+        document.getElementById("description").value.trim();
+
+      const { error } = await supabaseClient
+        .from("site_content")
+        .upsert({
+          section: "hero",
+          title: brand,
+          subtitle: headline,
+          description: description
+        }, {
+          onConflict: "section"
+        });
+
+      if (error) {
+
+        message.textContent = error.message;
+        message.className = "danger";
+
+      } else {
+
+        message.textContent = "Changes saved.";
+        message.className = "";
+
+      }
+
+      saveButton.disabled = false;
+      saveButton.textContent = "Save Changes";
+    }
+
+    saveButton.addEventListener(
+      "click",
+      saveHomepage
+    );
+
+    checkOwner();
+
+  </script>
+
+</body>
+</html>
