@@ -1,386 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>MADHAV STUDIOS</title>
-  <meta name="description" content="Madhav Studios — We create things people remember.">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-  <!-- ================= NAVIGATION ================= -->
-
-  <header class="nav" id="nav">
-    <div class="nav-inner">
-
-      <a href="#top" class="logo">
-        MADHAV STUDIOS
-      </a>
-
-      <button class="nav-toggle" aria-label="Open menu">
-        <span></span>
-        <span></span>
-      </button>
-
-      <nav class="nav-links">
-        <a href="#work">Work</a>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-    </div>
-  </header>
-
-
-  <main id="top">
-
-    <!-- ================= HERO ================= -->
-
-    <section class="hero" data-hero>
-
-      <div class="hero-inner">
-
-        <p class="eyebrow" data-content="brand">
-          MADHAV STUDIOS
-        </p>
-
-        <h1 data-content="headline">
-          We create things people remember.
-        </h1>
-
-        <p class="hero-description" data-content="description">
-          We build bold brands, digital experiences and visual stories designed to leave a lasting impression.
-        </p>
-
-        <div class="hero-actions">
-
-          <a href="#work" class="button button-primary">
-            View Our Work
-          </a>
-
-          <a href="#contact" class="button button-secondary">
-            Start a Project
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= WORK ================= -->
-
-    <section class="section" id="work">
-
-      <div class="section-head">
-
-        <div>
-          <p class="eyebrow">SELECTED WORK</p>
-
-          <h2>
-            Work that<br>
-            speaks.
-          </h2>
-        </div>
-
-        <p class="section-description">
-          A selection of creative work crafted with strategy,
-          design and attention to detail.
-        </p>
-
-      </div>
-
-
-      <div class="work-grid" data-projects>
-
-        <!-- Projects from Supabase will appear here -->
-
-        <article class="work-card work-card--lg">
-
-          <div class="work-media">
-            <div class="work-placeholder">
-              MADHAV
-            </div>
-          </div>
-
-          <div class="work-info">
-
-            <div>
-              <span class="work-category">
-                CREATIVE
-              </span>
-
-              <h3>
-                Madhav Studios
-              </h3>
-            </div>
-
-            <p>
-              Creative direction, branding and digital experience.
-            </p>
-
-          </div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= SERVICES ================= -->
-
-    <section class="section services-section" id="services">
-
-      <div class="section-head">
-
-        <div>
-          <p class="eyebrow">WHAT WE DO</p>
-
-          <h2>
-            Built for<br>
-            impact.
-          </h2>
-        </div>
-
-        <p class="section-description">
-          From the first idea to the final pixel, we create
-          experiences that connect brands with people.
-        </p>
-
-      </div>
-
-
-      <div class="services-grid">
-
-        <article class="service-card">
-          <span>01</span>
-          <h3>Branding</h3>
-          <p>
-            Identity systems that make brands recognizable,
-            memorable and distinctive.
-          </p>
-        </article>
-
-        <article class="service-card">
-          <span>02</span>
-          <h3>Web Design</h3>
-          <p>
-            Premium digital experiences designed around people,
-            purpose and performance.
-          </p>
-        </article>
-
-        <article class="service-card">
-          <span>03</span>
-          <h3>Creative Direction</h3>
-          <p>
-            Clear creative vision that turns ideas into
-            powerful visual experiences.
-          </p>
-        </article>
-
-        <article class="service-card">
-          <span>04</span>
-          <h3>Video & Motion</h3>
-          <p>
-            Cinematic visuals, motion and storytelling that
-            bring brands to life.
-          </p>
-        </article>
-
-        <article class="service-card">
-          <span>05</span>
-          <h3>Social Media</h3>
-          <p>
-            Social-first creative built to capture attention
-            and create meaningful engagement.
-          </p>
-        </article>
-
-        <article class="service-card">
-          <span>06</span>
-          <h3>Digital</h3>
-          <p>
-            Digital experiences that combine creativity,
-            technology and strategy.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= ABOUT ================= -->
-
-    <section class="section about-section" id="about">
-
-      <div class="section-head">
-
-        <div>
-          <p class="eyebrow">ABOUT US</p>
-
-          <h2>
-            Ideas with<br>
-            intention.
-          </h2>
-        </div>
-
-        <div class="about-copy">
-
-          <p>
-            Madhav Studios is a creative studio focused on
-            building brands and experiences people remember.
-          </p>
-
-          <p>
-            We combine strategy, design, technology and
-            storytelling to create work with purpose.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= PROCESS ================= -->
-
-    <section class="section process-section">
-
-      <div class="section-head">
-
-        <div>
-          <p class="eyebrow">OUR PROCESS</p>
-
-          <h2>
-            From idea<br>
-            to impact.
-          </h2>
-        </div>
-
-      </div>
-
-
-      <div class="process-grid">
-
-        <article class="process-card">
-          <span>01</span>
-          <h3>Discover</h3>
-          <p>
-            We understand your brand, audience and goals.
-          </p>
-        </article>
-
-        <article class="process-card">
-          <span>02</span>
-          <h3>Define</h3>
-          <p>
-            We create the strategy and creative direction.
-          </p>
-        </article>
-
-        <article class="process-card">
-          <span>03</span>
-          <h3>Create</h3>
-          <p>
-            We turn the strategy into meaningful creative work.
-          </p>
-        </article>
-
-        <article class="process-card">
-          <span>04</span>
-          <h3>Launch</h3>
-          <p>
-            We bring everything together and put it into action.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= CONTACT ================= -->
-
-    <section class="section cta-section" id="contact">
-
-      <div class="cta-inner">
-
-        <p class="eyebrow">
-          HAVE A PROJECT?
-        </p>
-
-        <h2>
-          Let's create<br>
-          something memorable.
-        </h2>
-
-        <a href="mailto:hello@madhavstudios.com"
-           class="button button-primary">
-          Start a Project
-        </a>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- ================= FOOTER ================= -->
-
-  <footer class="footer">
-
-    <div class="footer-inner">
-
-      <div>
-        <div class="logo">
-          MADHAV STUDIOS
-        </div>
-
-        <p>
-          Creative ideas. Digital experiences.
-        </p>
-      </div>
-
-      <div class="footer-right">
-
-        <a href="#top">
-          Back to top ↑
-        </a>
-
-        <p>
-          © <span id="year"></span> Madhav Studios
-        </p>
-
-      </div>
-
-    </div>
-
-  </footer>
-
-
-  <!-- ================= SCRIPTS ================= -->
-
-  <!-- Supabase MUST load before script.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script src="supabase-config.js"></script>
-
-  <script src="script.js"></script>
-
-</body>
-</html>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#090909;--panel:#111;--text:#f3f1eb;--muted:#9c9a94;--line:#262626;--accent:#d7ff4f}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;line-height:1.5;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 10%,rgba(215,255,79,.08),transparent 28%),radial-gradient(circle at 10% 70%,rgba(130,90,255,.09),transparent 25%);z-index:-2}
+.noise{position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:50;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+.nav{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(9,9,9,.82);backdrop-filter:blur(18px);z-index:20}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.08em;font-size:13px}
+.brand b{color:var(--muted);font-weight:500}
+.brand-mark{display:grid;place-items:center;width:34px;height:34px;border:1px solid #444;font:700 12px "Space Grotesk";border-radius:50%}
+.links{display:flex;align-items:center;gap:28px;font-size:14px;color:#d3d1cc}
+.links a:not(.nav-cta):hover{color:var(--accent)}
+.nav-cta{border:1px solid #444;padding:10px 16px;border-radius:99px}
+.nav-cta:hover{border-color:var(--accent);color:var(--accent)}
+.menu-btn{display:none;background:none;border:0;color:#fff}
+.hero{min-height:calc(100vh - 82px);padding:8vh 8vw 6vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.eyebrow{text-transform:uppercase;letter-spacing:.17em;font-size:11px;color:var(--muted);margin-bottom:25px}
+.hero h1,.section h2,.statement h2{font-family:"Space Grotesk",sans-serif;font-size:clamp(64px,10.5vw,160px);line-height:.88;letter-spacing:-.065em;max-width:950px}
+.hero h1 span,.section h2 span,.statement span{color:var(--accent)}
+.hero-copy{max-width:590px;color:#b7b5af;font-size:18px;margin-top:34px}
+.hero-actions{display:flex;gap:14px;margin-top:34px}
+.button{padding:14px 20px;border-radius:999px;font-weight:600;font-size:14px}
+.button.primary{background:var(--accent);color:#0b0b0b}
+.button.primary:hover{transform:translateY(-2px)}
+.button.ghost{border:1px solid #414141}.button.ghost:hover{border-color:var(--accent)}
+.scroll-note{margin-top:11vh;color:#666;font-size:10px;letter-spacing:.22em}.scroll-note span{color:var(--accent);margin-left:9px}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(1px);pointer-events:none}
+.orb-a{width:420px;height:420px;background:radial-gradient(circle,#d7ff4f 0%,rgba(215,255,79,.12) 30%,transparent 68%);right:-160px;top:18%;opacity:.32}
+.orb-b{width:300px;height:300px;background:radial-gradient(circle,#9c6cff 0%,rgba(156,108,255,.12) 32%,transparent 70%);right:21%;bottom:2%;opacity:.28}
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;color:#777;font:600 12px "Space Grotesk";letter-spacing:.15em;padding:17px 0}
+.marquee div{display:inline-block;animation:slide 25s linear infinite}
+@keyframes slide{to{transform:translateX(-50%)}}
+.section{padding:130px 8vw}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:50px;margin-bottom:60px}
+.section h2{font-size:clamp(52px,7.5vw,105px)}
+.section-intro{max-width:350px;color:var(--muted);font-size:14px}
+.projects{display:grid;grid-template-columns:1.45fr 1fr;gap:28px}
+.project{min-width:0}.project-large{grid-row:span 2}
+.project-art{height:420px;border:1px solid #2b2b2b;position:relative;overflow:hidden;background:#141414}
+.project-large .project-art{height:650px}
+.project-art:before{content:"";position:absolute;inset:-20%;transition:transform .7s ease}
+.project:hover .project-art:before{transform:scale(1.08) rotate(4deg)}
+.art-1:before{background:radial-gradient(circle at 30% 35%,#d7ff4f,transparent 20%),radial-gradient(circle at 75% 65%,#5935ff,transparent 30%),linear-gradient(135deg,#1a1a1a,#060606)}
+.art-2:before{background:conic-gradient(from 170deg at 45% 55%,#ff7a18,#ff007a,#341aff,#00d9ff,#ff7a18)}
+.art-3:before{background:radial-gradient(circle at 70% 40%,#ffcc70,transparent 12%),radial-gradient(circle at 35% 75%,#df2bff,transparent 25%),linear-gradient(120deg,#101010,#201126)}
+.project-art span{position:absolute;top:18px;left:18px;font-size:11px;color:#fff;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.2);padding:6px 9px;border-radius:99px}
+.project-info{display:flex;justify-content:space-between;gap:16px;padding:16px 0 7px;border-bottom:1px solid var(--line)}
+.project-info p{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:#777;margin-bottom:4px}
+.project-info h3{font:500 18px "Space Grotesk"}
+.arrow{font-size:20px;color:var(--accent)}
+.services{border-top:1px solid var(--line)}
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line)}
+.service{padding:36px 20px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.service:nth-child(2n){border-right:0}
+.service span{color:#666;font:12px "Space Grotesk"}
+.service h3{font:500 42px "Space Grotesk";margin:36px 0 14px}
+.service p{color:var(--muted);max-width:420px}
+.statement{padding:150px 8vw;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.statement h2{max-width:1100px;font-size:clamp(55px,8.3vw,120px)}
+.statement>p:last-child{max-width:670px;color:var(--muted);font-size:18px;margin-top:55px}
+.contact{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:end}
+.contact-card{border:1px solid var(--line);padding:35px;background:#0d0d0d}
+.contact-card p{color:var(--muted);font-size:13px;margin-bottom:24px}
+.contact-card a{font:500 clamp(20px,2.3vw,34px) "Space Grotesk";word-break:break-word}
+.contact-card a:hover{color:var(--accent)}
+.contact-card small{display:block;color:#555;margin-top:28px}
+footer{padding:28px 8vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;color:#666;font-size:12px}
+.footer-brand{font:700 13px "Space Grotesk";letter-spacing:.1em;color:#aaa}.footer-brand span{color:var(--accent)}
+footer a:hover{color:var(--accent)}
+@media(max-width:760px){
+ .nav{height:70px;padding:0 5vw}.links{display:none;position:absolute;top:70px;left:0;right:0;background:#0b0b0b;padding:18px 5vw 24px;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start}.links.open{display:flex}.menu-btn{display:flex;flex-direction:column;gap:6px}.menu-btn span{width:24px;height:1px;background:#fff}
+ .hero{min-height:calc(100vh - 70px);padding:8vh 7vw 6vh}.hero h1{font-size:20vw}.hero-copy{font-size:16px}.scroll-note{margin-top:10vh}
+ .section{padding:90px 7vw}.section-head{display:block;margin-bottom:40px}.section-intro{margin-top:25px}.projects{grid-template-columns:1fr;gap:42px}.project-large{grid-row:auto}.project-art,.project-large .project-art{height:390px}
+ .service-grid{grid-template-columns:1fr}.service{border-right:0}.service h3{font-size:34px}
+ .statement{padding:100px 7vw}.statement>p:last-child{margin-top:35px;font-size:16px}
+ .contact{grid-template-columns:1fr;gap:45px}.contact-card{padding:28px}
+ footer{padding:24px 7vw;flex-direction:column}
+}
