@@ -1,727 +1,386 @@
-/* =================================================================
-   MADHAV STUDIOS — Design tokens
-   Change values here to re-theme the entire site.
-================================================================= */
-:root{
-  /* colour */
-  --bg:        #07080a;
-  --bg-soft:   #0e1012;
-  --panel:     #131518;
-  --line:      rgba(244,242,237,.09);
-  --line-strong: rgba(244,242,237,.16);
-  --ink:       #f4f2ed;
-  --ink-dim:   #a9a9ac;
-  --ink-faint: #6c6c70;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  --accent:      #ffae00;   /* molten amber — the one accent colour */
-  --accent-ink:  #1a1000;   /* text colour when sitting on the accent */
-  --accent-soft: rgba(255,174,0,.14);
-  --accent-glow: rgba(255,174,0,.35);
+  <title>MADHAV STUDIOS</title>
+  <meta name="description" content="Madhav Studios — We create things people remember.">
 
-  /* type */
-  --f-display: 'Unbounded', system-ui, sans-serif;
-  --f-body:    'Inter', system-ui, sans-serif;
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  /* layout */
-  --container: 1280px;
-  --gutter: clamp(20px, 5vw, 64px);
-  --radius-s: 6px;
-  --radius-m: 14px;
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  --ease: cubic-bezier(.16,.84,.44,1);
-}
+<body>
 
-/* =================================================================
-   RESET
-================================================================= */
-*, *::before, *::after{ box-sizing:border-box; margin:0; padding:0; }
-html{
-  scroll-behavior:smooth;
-  color-scheme: dark;
-}
-@media (prefers-reduced-motion: reduce){
-  html{ scroll-behavior:auto; }
-  *, *::before, *::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
-}
+  <!-- ================= NAVIGATION ================= -->
 
-body{
-  background:var(--bg);
-  color:var(--ink);
-  font-family:var(--f-body);
-  font-size:16px;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
+  <header class="nav" id="nav">
+    <div class="nav-inner">
 
-img{ max-width:100%; display:block; }
-a{ color:inherit; text-decoration:none; }
-ul, ol{ list-style:none; }
-button{ font:inherit; background:none; border:0; color:inherit; cursor:pointer; }
+      <a href="#top" class="logo">
+        MADHAV STUDIOS
+      </a>
 
-::selection{ background:var(--accent); color:var(--accent-ink); }
+      <button class="nav-toggle" aria-label="Open menu">
+        <span></span>
+        <span></span>
+      </button>
 
-::-webkit-scrollbar{ width:10px; }
-::-webkit-scrollbar-track{ background:var(--bg); }
-::-webkit-scrollbar-thumb{ background:#242527; border-radius:8px; }
-::-webkit-scrollbar-thumb:hover{ background:#333437; }
+      <nav class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-.container{
-  width:100%;
-  max-width:var(--container);
-  margin-inline:auto;
-  padding-inline:var(--gutter);
-}
+    </div>
+  </header>
 
-/* =================================================================
-   GRAIN OVERLAY — cinematic texture across the whole page
-================================================================= */
-.grain{
-  position:fixed; inset:0;
-  z-index:999;
-  pointer-events:none;
-  opacity:.05;
-  mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
 
-/* =================================================================
-   CUSTOM CURSOR (desktop / fine-pointer only, added via JS)
-================================================================= */
-.cursor-dot, .cursor-ring{
-  position:fixed; top:0; left:0;
-  pointer-events:none;
-  z-index:1000;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  opacity:0;
-  transition:opacity .2s var(--ease);
-}
-.cursor-dot{ width:6px; height:6px; background:var(--accent); }
-.cursor-ring{
-  width:34px; height:34px;
-  border:1px solid var(--line-strong);
-  transition:opacity .2s var(--ease), width .25s var(--ease), height .25s var(--ease), border-color .25s var(--ease);
-}
-body.has-cursor .cursor-dot,
-body.has-cursor .cursor-ring{ opacity:1; }
-body.cursor-hover .cursor-ring{
-  width:56px; height:56px;
-  border-color:var(--accent);
-}
+  <main id="top">
 
-/* =================================================================
-   NAV
-================================================================= */
-.nav{
-  position:fixed; top:0; left:0; right:0;
-  z-index:500;
-  padding-block:22px;
-  transition:padding .4s var(--ease), background-color .4s var(--ease), border-color .4s var(--ease);
-  border-bottom:1px solid transparent;
-}
-.nav.is-scrolled{
-  padding-block:14px;
-  background:rgba(7,8,10,.82);
-  backdrop-filter:blur(14px) saturate(140%);
-  border-bottom-color:var(--line);
-}
-.nav-inner{
-  display:flex; align-items:center; justify-content:space-between;
-}
-.nav-logo{
-  font-family:var(--f-display);
-  font-weight:600;
-  font-size:15px;
-  letter-spacing:.04em;
-}
-.nav-links{
-  display:flex; align-items:center; gap:36px;
-  font-size:14px;
-  font-weight:500;
-  color:var(--ink-dim);
-}
-.nav-links a{
-  position:relative;
-  padding-block:4px;
-  transition:color .25s var(--ease);
-}
-.nav-links a:not(.nav-cta)::after{
-  content:'';
-  position:absolute; left:0; right:0; bottom:0;
-  height:1px;
-  background:var(--accent);
-  transform:scaleX(0);
-  transform-origin:right;
-  transition:transform .35s var(--ease);
-}
-.nav-links a:not(.nav-cta):hover{ color:var(--ink); }
-.nav-links a:not(.nav-cta):hover::after{ transform:scaleX(1); transform-origin:left; }
+    <!-- ================= HERO ================= -->
 
-.nav-cta{
-  color:var(--ink);
-  padding:9px 18px;
-  border:1px solid var(--line-strong);
-  border-radius:100px;
-  transition:border-color .3s var(--ease), background-color .3s var(--ease), color .3s var(--ease);
-}
-.nav-cta:hover{
-  border-color:var(--accent);
-  background:var(--accent);
-  color:var(--accent-ink);
-}
+    <section class="hero" data-hero>
 
-.nav-toggle{
-  display:none;
-  width:32px; height:20px;
-  position:relative;
-}
-.nav-toggle span{
-  position:absolute; left:0; right:0;
-  height:1px; background:var(--ink);
-  transition:transform .3s var(--ease), opacity .3s var(--ease), top .3s var(--ease);
-}
-.nav-toggle span:first-child{ top:0; }
-.nav-toggle span:last-child{ top:100%; transform:translateY(-1px); }
-.nav-toggle[aria-expanded="true"] span:first-child{ top:50%; transform:rotate(45deg); }
-.nav-toggle[aria-expanded="true"] span:last-child{ top:50%; transform:translateY(0) rotate(-45deg); }
+      <div class="hero-inner">
 
-/* =================================================================
-   BUTTONS
-================================================================= */
-.btn{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height:54px;
-  padding-inline:30px;
-  border-radius:100px;
-  font-family:var(--f-body);
-  font-weight:600;
-  font-size:14.5px;
-  letter-spacing:.01em;
-  overflow:hidden;
-  isolation:isolate;
-  transition:transform .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease);
-}
-.btn span{ position:relative; z-index:2; }
-.btn:active{ transform:scale(.97); }
+        <p class="eyebrow" data-content="brand">
+          MADHAV STUDIOS
+        </p>
 
-.btn--primary{
-  background:var(--accent);
-  color:var(--accent-ink);
-}
-.btn--primary::before{
-  content:'';
-  position:absolute; inset:0;
-  background:var(--ink);
-  transform:translateY(101%);
-  transition:transform .4s var(--ease);
-  z-index:1;
-}
-.btn--primary:hover::before{ transform:translateY(0); }
-.btn--primary:hover{ color:var(--bg); }
+        <h1 data-content="headline">
+          We create things people remember.
+        </h1>
 
-.btn--ghost{
-  border:1px solid var(--line-strong);
-  color:var(--ink);
-}
-.btn--ghost::before{
-  content:'';
-  position:absolute; inset:0;
-  background:var(--ink);
-  transform:translateY(101%);
-  transition:transform .4s var(--ease);
-  z-index:1;
-}
-.btn--ghost:hover::before{ transform:translateY(0); }
-.btn--ghost:hover{ color:var(--bg); border-color:var(--ink); }
+        <p class="hero-description" data-content="description">
+          We build bold brands, digital experiences and visual stories designed to leave a lasting impression.
+        </p>
 
-.btn--lg{ height:64px; padding-inline:38px; font-size:16px; }
+        <div class="hero-actions">
 
-/* =================================================================
-   SECTION HEAD (shared)
-================================================================= */
-.section-head{
-  max-width:640px;
-  margin-bottom:64px;
-}
-.section-head h2{
-  font-family:var(--f-display);
-  font-weight:600;
-  font-size:clamp(30px, 4vw, 46px);
-  line-height:1.15;
-  margin-bottom:16px;
-}
-.section-head p{
-  color:var(--ink-dim);
-  font-size:17px;
-  max-width:44ch;
-}
+          <a href="#work" class="button button-primary">
+            View Our Work
+          </a>
 
-section{ padding-block:clamp(80px, 12vw, 160px); }
+          <a href="#contact" class="button button-secondary">
+            Start a Project
+          </a>
 
-/* =================================================================
-   HERO
-================================================================= */
-.hero{
-  position:relative;
-  min-height:100svh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding-top:120px;
-  padding-bottom:60px;
-  overflow:hidden;
-}
-.hero-glow{
-  position:absolute;
-  border-radius:50%;
-  filter:blur(120px);
-  pointer-events:none;
-  z-index:0;
-}
-.hero-glow--a{
-  width:640px; height:640px;
-  background:var(--accent-glow);
-  top:-220px; left:50%;
-  transform:translateX(-38%);
-  opacity:.35;
-}
-.hero-glow--b{
-  width:420px; height:420px;
-  background:#3a2b00;
-  bottom:-160px; right:-80px;
-  opacity:.5;
-}
+        </div>
 
-.hero-inner{ position:relative; z-index:1; }
+      </div>
 
-.hero-eyebrow{
-  color:var(--ink-dim);
-  font-size:14px;
-  margin-bottom:28px;
-}
+    </section>
 
-.hero-title{
-  font-family:var(--f-display);
-  font-weight:600;
-  font-size:clamp(46px, 9.5vw, 128px);
-  line-height:.98;
-  letter-spacing:-.01em;
-}
-.hero-title em{
-  font-style:normal;
-  color:var(--accent);
-}
-.hero-title .line{ display:block; overflow:hidden; }
-.hero-title .reveal{ display:inline-block; }
 
-.hero-foot{
-  margin-top:56px;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:48px;
-  flex-wrap:wrap;
-}
-.hero-desc{
-  max-width:34ch;
-  color:var(--ink-dim);
-  font-size:17px;
-}
-.hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+    <!-- ================= WORK ================= -->
 
-.scroll-cue{
-  position:absolute;
-  bottom:36px; left:var(--gutter);
-  display:flex; align-items:center; gap:12px;
-  font-size:12px;
-  letter-spacing:.08em;
-  color:var(--ink-faint);
-  z-index:1;
-}
-.scroll-cue-line{
-  width:1px; height:34px;
-  background:var(--line-strong);
-  position:relative;
-  overflow:hidden;
-}
-.scroll-cue-line::after{
-  content:'';
-  position:absolute; top:-100%; left:0; right:0;
-  height:100%;
-  background:var(--accent);
-  animation:scrollcue 2.2s var(--ease) infinite;
-}
-@keyframes scrollcue{
-  0%{ top:-100%; }
-  60%{ top:100%; }
-  100%{ top:100%; }
-}
+    <section class="section" id="work">
 
-/* =================================================================
-   REVEAL-ON-SCROLL (single, restrained pattern — used across sections)
-================================================================= */
-[data-reveal]{
-  opacity:0;
-  transform:translateY(22px);
-  transition:opacity .8s var(--ease), transform .8s var(--ease);
-}
-[data-reveal].is-visible{
-  opacity:1;
-  transform:translateY(0);
-}
+      <div class="section-head">
 
-/* hero load-in sequence, orchestrated once on page load */
-[data-hero]{
-  opacity:0;
-  transform:translateY(18px);
-  transition:opacity .9s var(--ease), transform .9s var(--ease);
-}
-body.hero-ready [data-hero]{ opacity:1; transform:translateY(0); }
-body.hero-ready .hero-title .line:nth-child(1) [data-hero],
-body.hero-ready .hero-title .line:nth-child(1){ transition-delay:.05s; }
-.hero-title .line:nth-child(2) .reveal{ transition-delay:.12s; }
-.hero-title .line:nth-child(3) .reveal{ transition-delay:.2s; }
-.hero-desc{ transition-delay:.32s; }
-.hero-actions{ transition-delay:.4s; }
+        <div>
+          <p class="eyebrow">SELECTED WORK</p>
 
-/* =================================================================
-   WORK / PORTFOLIO
-================================================================= */
-.work-grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:clamp(14px, 2vw, 24px);
-}
-.work-card{
-  position:relative;
-  display:block;
-  border-radius:var(--radius-m);
-  overflow:hidden;
-  aspect-ratio:4/5;
-  border:1px solid var(--line);
-}
-.work-card--lg{
-  grid-column:span 2;
-  aspect-ratio:16/10;
-}
+          <h2>
+            Work that<br>
+            speaks.
+          </h2>
+        </div>
 
-.work-media{
-  position:absolute; inset:0;
-  transform:scale(1.04);
-  transition:transform .7s var(--ease), filter .7s var(--ease);
-  filter:saturate(.9);
-}
-.work-card:hover .work-media{ transform:scale(1.12); filter:saturate(1.1); }
+        <p class="section-description">
+          A selection of creative work crafted with strategy,
+          design and attention to detail.
+        </p>
 
-/* Placeholder gradients — swap for background-image: url(...) with real work */
-.work-media--1{ background:
-  radial-gradient(120% 140% at 15% 10%, rgba(255,174,0,.5), transparent 55%),
-  linear-gradient(150deg, #201a10, #0b0c0d 65%); }
-.work-media--2{ background:
-  radial-gradient(120% 140% at 85% 90%, rgba(255,174,0,.35), transparent 55%),
-  linear-gradient(200deg, #141517, #06070a 70%); }
-.work-media--3{ background:
-  radial-gradient(140% 120% at 80% 10%, rgba(255,120,0,.3), transparent 55%),
-  linear-gradient(160deg, #1a1512, #08090a 70%); }
-.work-media--4{ background:
-  radial-gradient(120% 160% at 20% 90%, rgba(255,174,0,.4), transparent 55%),
-  linear-gradient(140deg, #191a14, #07080a 65%); }
-.work-media--5{ background:
-  radial-gradient(130% 130% at 90% 20%, rgba(255,174,0,.28), transparent 55%),
-  linear-gradient(190deg, #16161a, #08080a 70%); }
-.work-media--6{ background:
-  radial-gradient(120% 140% at 10% 80%, rgba(255,140,0,.32), transparent 55%),
-  linear-gradient(170deg, #1c1712, #08090a 70%); }
+      </div>
 
-.work-media::after{
-  content:'';
-  position:absolute; inset:0;
-  background:linear-gradient(0deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,0) 40%);
-}
 
-.work-info{
-  position:absolute; left:0; right:0; bottom:0;
-  padding:24px;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:12px;
-  transform:translateY(6px);
-  transition:transform .5s var(--ease);
-}
-.work-card:hover .work-info{ transform:translateY(0); }
-.work-info h3{
-  font-family:var(--f-display);
-  font-weight:500;
-  font-size:22px;
-}
-.work-info span{
-  color:var(--ink-dim);
-  font-size:13px;
-  text-align:right;
-}
+      <div class="work-grid" data-projects>
 
-.work-card{ --px:50%; --py:50%; }
-.work-card::before{
-  content:'';
-  position:absolute; inset:0;
-  z-index:1;
-  opacity:0;
-  background:radial-gradient(280px circle at var(--px) var(--py), var(--accent-soft), transparent 70%);
-  transition:opacity .4s var(--ease);
-  pointer-events:none;
-}
-.work-card:hover::before{ opacity:1; }
+        <!-- Projects from Supabase will appear here -->
 
-/* =================================================================
-   SERVICES — editorial rows
-================================================================= */
-.service-list{ border-top:1px solid var(--line); }
-.service-row{
-  display:grid;
-  grid-template-columns:60px 1fr 1fr;
-  align-items:center;
-  gap:24px;
-  padding-block:30px;
-  border-bottom:1px solid var(--line);
-  transition:padding-left .4s var(--ease), background-color .4s var(--ease);
-}
-.service-row:hover{
-  padding-left:14px;
-  background:linear-gradient(90deg, var(--accent-soft), transparent 60%);
-}
-.service-index{
-  font-family:var(--f-body);
-  color:var(--ink-faint);
-  font-size:14px;
-}
-.service-name{
-  font-family:var(--f-display);
-  font-weight:500;
-  font-size:clamp(22px, 3vw, 30px);
-}
-.service-desc{
-  color:var(--ink-dim);
-  font-size:15px;
-  max-width:42ch;
-}
+        <article class="work-card work-card--lg">
 
-/* =================================================================
-   ABOUT
-================================================================= */
-.about{ background:var(--bg-soft); border-block:1px solid var(--line); }
-.about-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:clamp(32px, 6vw, 90px);
-  align-items:start;
-}
-.about-statement h2{
-  font-family:var(--f-display);
-  font-weight:500;
-  font-size:clamp(28px, 3.6vw, 42px);
-  line-height:1.25;
-  position:sticky;
-  top:120px;
-}
-.about-body p{
-  color:var(--ink-dim);
-  font-size:17px;
-  max-width:56ch;
-  margin-bottom:20px;
-}
-.about-stats{
-  display:flex;
-  gap:clamp(24px, 5vw, 56px);
-  margin-top:40px;
-  padding-top:32px;
-  border-top:1px solid var(--line);
-  flex-wrap:wrap;
-}
-.stat{ display:flex; flex-direction:column; gap:6px; }
-.stat-num{
-  font-family:var(--f-display);
-  color:var(--accent);
-  font-size:34px;
-  font-weight:600;
-}
-.stat-label{ color:var(--ink-dim); font-size:13.5px; }
+          <div class="work-media">
+            <div class="work-placeholder">
+              MADHAV
+            </div>
+          </div>
 
-/* =================================================================
-   PROCESS
-================================================================= */
-.process-line{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:28px;
-  position:relative;
-}
-.process-line::before{
-  content:'';
-  position:absolute;
-  top:14px; left:0; right:0;
-  height:1px;
-  background:var(--line);
-}
-.process-step{
-  position:relative;
-  padding-top:44px;
-}
-.process-step::before{
-  content:'';
-  position:absolute;
-  top:9px; left:0;
-  width:11px; height:11px;
-  border-radius:50%;
-  background:var(--bg);
-  border:1px solid var(--accent);
-}
-.process-num{
-  display:block;
-  color:var(--ink-faint);
-  font-size:13px;
-  margin-bottom:14px;
-}
-.process-step h3{
-  font-family:var(--f-display);
-  font-weight:500;
-  font-size:22px;
-  margin-bottom:12px;
-}
-.process-step p{
-  color:var(--ink-dim);
-  font-size:15px;
-  max-width:32ch;
-}
+          <div class="work-info">
 
-/* =================================================================
-   CTA
-================================================================= */
-.cta{
-  position:relative;
-  text-align:center;
-  overflow:hidden;
-  border-top:1px solid var(--line);
-}
-.cta-glow{
-  position:absolute;
-  width:900px; height:500px;
-  left:50%; top:50%;
-  transform:translate(-50%,-50%);
-  background:radial-gradient(closest-side, var(--accent-glow), transparent 70%);
-  opacity:.25;
-  filter:blur(60px);
-  pointer-events:none;
-}
-.cta-inner{ position:relative; z-index:1; }
-.cta h2{
-  font-family:var(--f-display);
-  font-weight:600;
-  font-size:clamp(38px, 7vw, 78px);
-  line-height:1.05;
-  margin-bottom:24px;
-}
-.cta p{
-  color:var(--ink-dim);
-  font-size:17px;
-  margin-bottom:40px;
-}
+            <div>
+              <span class="work-category">
+                CREATIVE
+              </span>
 
-/* =================================================================
-   FOOTER
-================================================================= */
-.footer{
-  padding-top:80px;
-  border-top:1px solid var(--line);
-}
-.footer-inner{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:40px;
-  padding-bottom:60px;
-}
-.footer-logo{
-  display:block;
-  font-family:var(--f-display);
-  font-weight:600;
-  font-size:16px;
-  margin-bottom:16px;
-}
-.footer-brand p{
-  color:var(--ink-dim);
-  max-width:32ch;
-  font-size:14.5px;
-}
-.footer-col h4{
-  font-size:13px;
-  color:var(--ink-faint);
-  font-weight:500;
-  margin-bottom:18px;
-}
-.footer-col a{
-  display:block;
-  color:var(--ink-dim);
-  font-size:14.5px;
-  padding-block:6px;
-  width:fit-content;
-  transition:color .25s var(--ease);
-}
-.footer-col a:hover{ color:var(--accent); }
+              <h3>
+                Madhav Studios
+              </h3>
+            </div>
 
-.footer-bottom{
-  display:flex;
-  justify-content:space-between;
-  padding-block:26px;
-  border-top:1px solid var(--line);
-  color:var(--ink-faint);
-  font-size:13px;
-}
+            <p>
+              Creative direction, branding and digital experience.
+            </p>
 
-/* =================================================================
-   RESPONSIVE
-================================================================= */
-@media (max-width: 900px){
-  .nav-links{
-    position:fixed; inset:0 0 0 auto;
-    width:min(78vw, 340px);
-    height:100svh;
-    background:var(--bg-soft);
-    border-left:1px solid var(--line);
-    flex-direction:column;
-    align-items:flex-start;
-    justify-content:center;
-    gap:28px;
-    padding-inline:36px;
-    transform:translateX(100%);
-    transition:transform .5s var(--ease);
-  }
-  .nav-links.is-open{ transform:translateX(0); }
-  .nav-links a{ font-size:20px; }
-  .nav-toggle{ display:block; }
+          </div>
 
-  .hero-foot{ flex-direction:column; align-items:flex-start; }
+        </article>
 
-  .work-grid{ grid-template-columns:1fr; }
-  .work-card--lg{ grid-column:span 1; aspect-ratio:4/5; }
+      </div>
 
-  .service-row{ grid-template-columns:40px 1fr; }
-  .service-desc{ grid-column:2 / 3; }
+    </section>
 
-  .about-grid{ grid-template-columns:1fr; }
-  .about-statement h2{ position:static; }
 
-  .process-line{ grid-template-columns:1fr; gap:36px; }
-  .process-line::before{ display:none; }
+    <!-- ================= SERVICES ================= -->
 
-  .footer-inner{ grid-template-columns:1fr; gap:32px; }
-  .footer-bottom{ flex-direction:column; gap:8px; }
-}
+    <section class="section services-section" id="services">
 
-@media (max-width:520px){
-  .hero{ padding-top:110px; }
-  .btn{ height:50px; padding-inline:24px; font-size:14px; }
-}
+      <div class="section-head">
+
+        <div>
+          <p class="eyebrow">WHAT WE DO</p>
+
+          <h2>
+            Built for<br>
+            impact.
+          </h2>
+        </div>
+
+        <p class="section-description">
+          From the first idea to the final pixel, we create
+          experiences that connect brands with people.
+        </p>
+
+      </div>
+
+
+      <div class="services-grid">
+
+        <article class="service-card">
+          <span>01</span>
+          <h3>Branding</h3>
+          <p>
+            Identity systems that make brands recognizable,
+            memorable and distinctive.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <span>02</span>
+          <h3>Web Design</h3>
+          <p>
+            Premium digital experiences designed around people,
+            purpose and performance.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <span>03</span>
+          <h3>Creative Direction</h3>
+          <p>
+            Clear creative vision that turns ideas into
+            powerful visual experiences.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <span>04</span>
+          <h3>Video & Motion</h3>
+          <p>
+            Cinematic visuals, motion and storytelling that
+            bring brands to life.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <span>05</span>
+          <h3>Social Media</h3>
+          <p>
+            Social-first creative built to capture attention
+            and create meaningful engagement.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <span>06</span>
+          <h3>Digital</h3>
+          <p>
+            Digital experiences that combine creativity,
+            technology and strategy.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= ABOUT ================= -->
+
+    <section class="section about-section" id="about">
+
+      <div class="section-head">
+
+        <div>
+          <p class="eyebrow">ABOUT US</p>
+
+          <h2>
+            Ideas with<br>
+            intention.
+          </h2>
+        </div>
+
+        <div class="about-copy">
+
+          <p>
+            Madhav Studios is a creative studio focused on
+            building brands and experiences people remember.
+          </p>
+
+          <p>
+            We combine strategy, design, technology and
+            storytelling to create work with purpose.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= PROCESS ================= -->
+
+    <section class="section process-section">
+
+      <div class="section-head">
+
+        <div>
+          <p class="eyebrow">OUR PROCESS</p>
+
+          <h2>
+            From idea<br>
+            to impact.
+          </h2>
+        </div>
+
+      </div>
+
+
+      <div class="process-grid">
+
+        <article class="process-card">
+          <span>01</span>
+          <h3>Discover</h3>
+          <p>
+            We understand your brand, audience and goals.
+          </p>
+        </article>
+
+        <article class="process-card">
+          <span>02</span>
+          <h3>Define</h3>
+          <p>
+            We create the strategy and creative direction.
+          </p>
+        </article>
+
+        <article class="process-card">
+          <span>03</span>
+          <h3>Create</h3>
+          <p>
+            We turn the strategy into meaningful creative work.
+          </p>
+        </article>
+
+        <article class="process-card">
+          <span>04</span>
+          <h3>Launch</h3>
+          <p>
+            We bring everything together and put it into action.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= CONTACT ================= -->
+
+    <section class="section cta-section" id="contact">
+
+      <div class="cta-inner">
+
+        <p class="eyebrow">
+          HAVE A PROJECT?
+        </p>
+
+        <h2>
+          Let's create<br>
+          something memorable.
+        </h2>
+
+        <a href="mailto:hello@madhavstudios.com"
+           class="button button-primary">
+          Start a Project
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="footer">
+
+    <div class="footer-inner">
+
+      <div>
+        <div class="logo">
+          MADHAV STUDIOS
+        </div>
+
+        <p>
+          Creative ideas. Digital experiences.
+        </p>
+      </div>
+
+      <div class="footer-right">
+
+        <a href="#top">
+          Back to top ↑
+        </a>
+
+        <p>
+          © <span id="year"></span> Madhav Studios
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- ================= SCRIPTS ================= -->
+
+  <!-- Supabase MUST load before script.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase-config.js"></script>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
