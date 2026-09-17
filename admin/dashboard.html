@@ -185,31 +185,31 @@
 
       <p>ADMIN</p>
 
-      <button class="nav-button active">
+      <button class="nav-button active" onclick="openDashboard()">
         Overview
       </button>
 
-      <button class="nav-button">
+      <button class="nav-button" onclick="openHomepage()">
         Homepage
       </button>
 
-      <button class="nav-button">
+      <button class="nav-button" onclick="openProjects()">
         Projects
       </button>
 
-      <button class="nav-button">
+      <button class="nav-button" onclick="openServices()">
         Services
       </button>
 
-      <button class="nav-button">
+      <button class="nav-button" onclick="openTestimonials()">
         Testimonials
       </button>
 
-      <button class="nav-button">
+      <button class="nav-button" onclick="openMessages()">
         Messages
       </button>
 
-      <button class="nav-button">
+      <button class="nav-button" onclick="openSettings()">
         Settings
       </button>
 
@@ -321,6 +321,34 @@
 
       document.getElementById("messagesCount").textContent =
         messages.count ?? 0;
+    }
+
+    function openDashboard() {
+      window.location.href = "dashboard.html";
+    }
+
+    function openHomepage() {
+      alert("Homepage Editor is coming next.");
+    }
+
+    function openProjects() {
+      alert("Projects Manager is coming next.");
+    }
+
+    function openServices() {
+      alert("Services Manager is coming next.");
+    }
+
+    function openTestimonials() {
+      alert("Testimonials Manager is coming next.");
+    }
+
+    function openMessages() {
+      alert("Messages Manager is coming next.");
+    }
+
+    function openSettings() {
+      alert("Settings is coming next.");
     }
 
     document
