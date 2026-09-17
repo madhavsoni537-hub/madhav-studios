@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Madhav Studios — Projects</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #080808;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 70px;
+      padding: 0 30px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 14px;
+      letter-spacing: 4px;
+      font-weight: bold;
+    }
+
+    .back {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 40px auto;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #777;
+      margin-bottom: 30px;
+    }
+
+    .form-box,
+    .project {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      color: #aaa;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 18px;
+      background: #080808;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 7px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #fff;
+    }
+
+    .button {
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: bold;
+      background: #fff;
+      color: #000;
+    }
+
+    .button.secondary {
+      background: #222;
+      color: #fff;
+      border: 1px solid #333;
+      margin-left: 8px;
+    }
+
+    .project {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .project-info h3 {
+      margin-bottom: 8px;
+    }
+
+    .project-info p {
+      color: #777;
+      line-height: 1.5;
+    }
+
+    .project-status {
+      font-size: 12px;
+      color: #77dd77;
+      margin-top: 10px;
+    }
+
+    .actions {
+      white-space: nowrap;
+    }
+
+    #message {
+      margin-top: 15px;
+      color: #77dd77;
+    }
+
+    .error {
+      color: #ff7777 !important;
+    }
+
+    @media (max-width: 650px) {
+      .project {
+        display: block;
+      }
+
+      .actions {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="logo">MADHAV STUDIOS</div>
+  <a class="back" href="dashboard.html">← Dashboard</a>
+</header>
+
+<main class="container">
+
+  <h1>Projects</h1>
+
+  <p class="subtitle">
+    Manage your Madhav Studios portfolio.
+  </p>
+
+  <section class="form-box">
+
+    <h2 id="formTitle">Add Project</h2>
+
+    <label>Project Title</label>
+    <input id="title" type="text" placeholder="Example: Brand Identity">
+
+    <label>Category</label>
+    <input id="category" type="text" placeholder="Branding">
+
+    <label>Description</label>
+    <textarea id="description" placeholder="Describe the project..."></textarea>
+
+    <label>Image URL</label>
+    <input id="image" type="url" placeholder="https://...">
+
+    <button class="button" id="saveButton">
+      Add Project
+    </button>
+
+    <button class="button secondary" id="cancelButton" style="display:none;">
+      Cancel
+    </button>
+
+    <div id="message"></div>
+
+  </section>
+
+  <section id="projectsList"></section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-config.js"></script>
+
+<script>
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+let editingId = null;
+
+async function checkOwner() {
+
+  const {
+    data: { session }
+  } = await supabaseClient.auth.getSession();
+
+  if (!session) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("admin_users")
+    .select("user_id")
+    .eq("user_id", session.user.id)
+    .maybeSingle();
+
+  if (error || !data) {
+    await supabaseClient.auth.signOut();
+    window.location.href = "index.html";
+    return;
+  }
+
+  loadProjects();
+}
+
+async function loadProjects() {
+
+  const list = document.getElementById("projectsList");
+
+  list.innerHTML = "<p>Loading projects...</p>";
+
+  const { data, error } = await supabaseClient
+    .from("projects")
+    .select("*")
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    list.innerHTML =
+      `<p class="error">${error.message}</p>`;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.innerHTML =
+      `<div class="project">
+        <p>No projects yet. Add your first project above.</p>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = "";
+
+  data.forEach(project => {
+
+    const item = document.createElement("div");
+
+    item.className = "project";
+
+    item.innerHTML = `
+      <div class="project-info">
+
+        <h3>${escapeHtml(project.title || "Untitled")}</h3>
+
+        <p>
+          ${escapeHtml(project.category || "")}
+        </p>
+
+        <p>
+          ${escapeHtml(project.description || "")}
+        </p>
+
+        <div class="project-status">
+          ${project.published ? "Published" : "Draft"}
+        </div>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="button"
+          onclick="editProject('${project.id}')">
+          Edit
+        </button>
+
+        <button
+          class="button secondary"
+          onclick="togglePublished('${project.id}', ${project.published})">
+          ${project.published ? "Unpublish" : "Publish"}
+        </button>
+
+        <button
+          class="button secondary"
+          onclick="deleteProject('${project.id}')">
+          Delete
+        </button>
+
+      </div>
+    `;
+
+    list.appendChild(item);
+  });
+}
+
+async function saveProject() {
+
+  const title =
+    document.getElementById("title").value.trim();
+
+  const category =
+    document.getElementById("category").value.trim();
+
+  const description =
+    document.getElementById("description").value.trim();
+
+  const image =
+    document.getElementById("image").value.trim();
+
+  const message =
+    document.getElementById("message");
+
+  if (!title) {
+    message.textContent = "Project title is required.";
+    message.className = "error";
+    return;
+  }
+
+  const projectData = {
+    title,
+    category,
+    description,
+    image_url: image
+  };
+
+  let result;
+
+  if (editingId) {
+
+    result = await supabaseClient
+      .from("projects")
+      .update(projectData)
+      .eq("id", editingId);
+
+  } else {
+
+    result = await supabaseClient
+      .from("projects")
+      .insert(projectData);
+  }
+
+  if (result.error) {
+
+    message.textContent = result.error.message;
+    message.className = "error";
+    return;
+  }
+
+  message.textContent =
+    editingId ? "Project updated." : "Project added.";
+
+  message.className = "";
+
+  clearForm();
+  loadProjects();
+}
+
+async function editProject(id) {
+
+  const { data, error } = await supabaseClient
+    .from("projects")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  editingId = id;
+
+  document.getElementById("formTitle").textContent =
+    "Edit Project";
+
+  document.getElementById("title").value =
+    data.title || "";
+
+  document.getElementById("category").value =
+    data.category || "";
+
+  document.getElementById("description").value =
+    data.description || "";
+
+  document.getElementById("image").value =
+    data.image_url || "";
+
+  document.getElementById("saveButton").textContent =
+    "Update Project";
+
+  document.getElementById("cancelButton").style.display =
+    "inline-block";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+async function deleteProject(id) {
+
+  if (!confirm("Delete this project?")) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("projects")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  loadProjects();
+}
+
+async function togglePublished(id, currentStatus) {
+
+  const { error } = await supabaseClient
+    .from("projects")
+    .update({
+      published: !currentStatus
+    })
+    .eq("id", id);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  loadProjects();
+}
+
+function clearForm() {
+
+  editingId = null;
+
+  document.getElementById("formTitle").textContent =
+    "Add Project";
+
+  document.getElementById("title").value = "";
+  document.getElementById("category").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("image").value = "";
+
+  document.getElementById("saveButton").textContent =
+    "Add Project";
+
+  document.getElementById("cancelButton").style.display =
+    "none";
+}
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+document
+  .getElementById("saveButton")
+  .addEventListener("click", saveProject);
+
+document
+  .getElementById("cancelButton")
+  .addEventListener("click", clearForm);
+
+checkOwner();
+
+</script>
+
+</body>
+</html>
