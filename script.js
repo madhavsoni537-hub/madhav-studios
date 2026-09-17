@@ -1,122 +1,223 @@
-/* =================================================================
-   MADHAV STUDIOS — interactions
-   Vanilla JS, no build step, no dependencies.
-================================================================= */
-document.addEventListener('DOMContentLoaded', () => {
+// ============================================
+// MADHAV STUDIOS — MAIN WEBSITE
+// ============================================
 
-  /* ---------------------------------------------------------------
-     Footer year
-  --------------------------------------------------------------- */
-  const yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-  /* ---------------------------------------------------------------
-     Nav: solid background after scrolling past the hero
-  --------------------------------------------------------------- */
-  const nav = document.getElementById('nav');
-  const onScroll = () => {
-    nav.classList.toggle('is-scrolled', window.scrollY > 40);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+// Footer year
+const yearElement = document.getElementById("year");
 
-  /* ---------------------------------------------------------------
-     Mobile nav toggle
-  --------------------------------------------------------------- */
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
 
-  navToggle.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('is-open');
-    navToggle.setAttribute('aria-expanded', String(isOpen));
+
+// ============================================
+// LOAD HOMEPAGE CONTENT
+// ============================================
+
+async function loadHomepageContent() {
+
+  const { data, error } = await supabaseClient
+    .from("site_content")
+    .select("*");
+
+  if (error) {
+    console.error("Could not load website content:", error);
+    return;
+  }
+
+  if (!data) return;
+
+  const hero = data.find(item => item.section === "hero");
+
+  if (!hero) return;
+
+
+  // Brand name
+  const brandElements = document.querySelectorAll(
+    "[data-content='brand']"
+  );
+
+  brandElements.forEach(element => {
+    if (hero.title) {
+      element.textContent = hero.title;
+    }
   });
 
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    });
+
+  // Main headline
+  const headlineElements = document.querySelectorAll(
+    "[data-content='headline']"
+  );
+
+  headlineElements.forEach(element => {
+    if (hero.subtitle) {
+      element.textContent = hero.subtitle;
+    }
   });
 
-  /* ---------------------------------------------------------------
-     Hero load-in — one orchestrated sequence, fires once
-  --------------------------------------------------------------- */
-  requestAnimationFrame(() => {
-    document.body.classList.add('hero-ready');
-  });
 
-  /* ---------------------------------------------------------------
-     Scroll reveal for sections (IntersectionObserver)
-  --------------------------------------------------------------- */
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  if ('IntersectionObserver' in window && revealEls.length) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
+  // Description
+  const descriptionElements = document.querySelectorAll(
+    "[data-content='description']"
+  );
+
+  descriptionElements.forEach(element => {
+    if (hero.description) {
+      element.textContent = hero.description;
+    }
+  });
+}
+
+
+// ============================================
+// LOAD PROJECTS
+// ============================================
+
+async function loadProjects() {
+
+  const container = document.querySelector(
+    "[data-projects]"
+  );
+
+  if (!container) return;
+
+  const { data, error } = await supabaseClient
+    .from("projects")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    console.error("Could not load projects:", error);
+    return;
+  }
+
+  if (!data || data.length === 0) return;
+
+  container.innerHTML = data.map(project => {
+
+    return `
+      <article class="work-card">
+
+        ${
+          project.image_url
+            ? `<img
+                src="${project.image_url}"
+                alt="${project.title || "Project"}"
+                loading="lazy"
+              >`
+            : ""
         }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
-    revealEls.forEach((el, i) => {
-      // small stagger within a section for a more crafted feel
-      el.style.transitionDelay = `${(i % 6) * 0.06}s`;
-      io.observe(el);
-    });
-  } else {
-    // fallback: no JS animation support, just show everything
-    revealEls.forEach(el => el.classList.add('is-visible'));
-  }
+        <div class="work-card-content">
 
-  /* ---------------------------------------------------------------
-     Custom cursor — desktop, fine-pointer, motion-OK only
-  --------------------------------------------------------------- */
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+          <div class="work-category">
+            ${project.category || ""}
+          </div>
 
-  if (hasFinePointer && !prefersReducedMotion) {
-    document.body.classList.add('has-cursor');
-    const dot = document.querySelector('.cursor-dot');
-    const ring = document.querySelector('.cursor-ring');
+          <h3>
+            ${project.title || ""}
+          </h3>
 
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
+          <p>
+            ${project.description || ""}
+          </p>
 
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.left = `${mouseX}px`;
-      dot.style.top = `${mouseY}px`;
-    });
+        </div>
 
-    const animateRing = () => {
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
-      ring.style.left = `${ringX}px`;
-      ring.style.top = `${ringY}px`;
-      requestAnimationFrame(animateRing);
-    };
-    animateRing();
+      </article>
+    `;
 
-    const hoverTargets = document.querySelectorAll('a, button, .work-card, .service-row');
-    hoverTargets.forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-  }
+  }).join("");
+}
 
-  /* ---------------------------------------------------------------
-     Work cards: subtle pointer-follow glow on hover
-  --------------------------------------------------------------- */
-  document.querySelectorAll('.work-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--px', `${x}%`);
-      card.style.setProperty('--py', `${y}%`);
-    });
+
+// ============================================
+// MOBILE NAVIGATION
+// ============================================
+
+const menuButton = document.querySelector(".menu-toggle");
+const nav = document.querySelector("nav");
+
+if (menuButton && nav) {
+
+  menuButton.addEventListener("click", () => {
+    nav.classList.toggle("active");
   });
+
+}
+
+
+// ============================================
+// SMOOTH SCROLL
+// ============================================
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+  link.addEventListener("click", function(event) {
+
+    const target = document.querySelector(
+      this.getAttribute("href")
+    );
+
+    if (!target) return;
+
+    event.preventDefault();
+
+    target.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  });
+
+});
+
+
+// ============================================
+// SCROLL REVEAL
+// ============================================
+
+const revealElements =
+  document.querySelectorAll(".reveal");
+
+const revealObserver =
+  new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+
+        entry.target.classList.add("visible");
+
+        revealObserver.unobserve(entry.target);
+
+      }
+
+    });
+
+  }, {
+    threshold: 0.12
+  });
+
+
+revealElements.forEach(element => {
+  revealObserver.observe(element);
+});
+
+
+// ============================================
+// START
+// ============================================
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  await loadHomepageContent();
+
+  await loadProjects();
 
 });
