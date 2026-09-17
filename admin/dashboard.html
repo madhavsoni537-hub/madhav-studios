@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Madhav Studios — Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #080808;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .topbar {
+      height: 70px;
+      padding: 0 30px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 14px;
+      letter-spacing: 4px;
+      font-weight: bold;
+    }
+
+    .logout {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #333;
+      padding: 10px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .logout:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+
+    .sidebar {
+      width: 240px;
+      border-right: 1px solid #222;
+      padding: 30px 20px;
+    }
+
+    .sidebar p {
+      color: #666;
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    .nav-button {
+      width: 100%;
+      text-align: left;
+      padding: 13px 15px;
+      margin-bottom: 7px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: #aaa;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .nav-button:hover,
+    .nav-button.active {
+      background: #171717;
+      color: #fff;
+    }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .content h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #777;
+      margin-bottom: 35px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      padding: 25px;
+    }
+
+    .card-title {
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .card-number {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .status {
+      margin-top: 35px;
+      padding: 20px;
+      background: #111;
+      border: 1px solid #242424;
+      border-radius: 12px;
+    }
+
+    .status span {
+      color: #77dd77;
+    }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        width: 190px;
+      }
+
+      .content {
+        padding: 25px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .layout {
+        display: block;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: 0;
+        border-bottom: 1px solid #222;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="logo">MADHAV STUDIOS</div>
+
+    <button class="logout" id="logoutButton">
+      Logout
+    </button>
+  </header>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+
+      <p>ADMIN</p>
+
+      <button class="nav-button active">
+        Overview
+      </button>
+
+      <button class="nav-button">
+        Homepage
+      </button>
+
+      <button class="nav-button">
+        Projects
+      </button>
+
+      <button class="nav-button">
+        Services
+      </button>
+
+      <button class="nav-button">
+        Testimonials
+      </button>
+
+      <button class="nav-button">
+        Messages
+      </button>
+
+      <button class="nav-button">
+        Settings
+      </button>
+
+    </aside>
+
+    <main class="content">
+
+      <h1>Dashboard</h1>
+
+      <p class="subtitle">
+        Welcome to your Madhav Studios control panel.
+      </p>
+
+      <section class="cards">
+
+        <div class="card">
+          <div class="card-title">PROJECTS</div>
+          <div class="card-number" id="projectsCount">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">SERVICES</div>
+          <div class="card-number" id="servicesCount">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">TESTIMONIALS</div>
+          <div class="card-number" id="testimonialsCount">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">MESSAGES</div>
+          <div class="card-number" id="messagesCount">—</div>
+        </div>
+
+      </section>
+
+      <div class="status">
+        System status:
+        <span>Connected</span>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-config.js"></script>
+
+  <script>
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    async function checkOwner() {
+
+      const {
+        data: { session }
+      } = await supabaseClient.auth.getSession();
+
+      if (!session) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from("admin_users")
+        .select("user_id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
+
+      if (error || !data) {
+        await supabaseClient.auth.signOut();
+        window.location.href = "index.html";
+        return;
+      }
+
+      loadCounts();
+    }
+
+    async function loadCounts() {
+
+      const projects = await supabaseClient
+        .from("projects")
+        .select("*", { count: "exact", head: true });
+
+      const services = await supabaseClient
+        .from("services")
+        .select("*", { count: "exact", head: true });
+
+      const testimonials = await supabaseClient
+        .from("testimonials")
+        .select("*", { count: "exact", head: true });
+
+      const messages = await supabaseClient
+        .from("contact_submissions")
+        .select("*", { count: "exact", head: true });
+
+      document.getElementById("projectsCount").textContent =
+        projects.count ?? 0;
+
+      document.getElementById("servicesCount").textContent =
+        services.count ?? 0;
+
+      document.getElementById("testimonialsCount").textContent =
+        testimonials.count ?? 0;
+
+      document.getElementById("messagesCount").textContent =
+        messages.count ?? 0;
+    }
+
+    document
+      .getElementById("logoutButton")
+      .addEventListener("click", async () => {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href = "index.html";
+      });
+
+    checkOwner();
+
+  </script>
+
+</body>
+</html>
